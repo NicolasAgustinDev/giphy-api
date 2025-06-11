@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Api gyphy</title>
+    
+</head>
+<body>
+    <h1>Api gyphy</h1>
+    <h2>Buscar gifs</h2>
+    <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Buscar gifs...">
+        <button type="submit">Buscar</button>
+    </form>
+    <div id="results">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+        <img src="https://media.giphy.com/media/3o7aD2saq1d2k4b5s0/giphy.gif" alt="Gif example">
+    </div>
+
+    <script>
+        const apiKey = '4mvig64p9otiILGzfh3HSqwNnjqi27ZT';
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const resultsContainer = document.getElementById('results');
+
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const query = searchInput.value;
+            const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${query}&limit=9`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const gifs = data.data;
+
+                // Clear previous results
+                resultsContainer.innerHTML = '';
+
+                gifs.forEach(gif => {
+                    const img = document.createElement('img');
+                    img.src = gif.images.original.url;
+                    img.alt = 'Gif result';
+                    resultsContainer.appendChild(img);
+                });
+            } catch (error) {
+                console.error('Error fetching GIFs:', error);
+            }
+        });
+    </script>
+</body>
+</html>
