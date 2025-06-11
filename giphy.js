@@ -1,26 +1,27 @@
-const apiKey = '4mvig64p9otiILGzfh3HSqwNnjqi27ZT';
-        const searchForm = document.getElementById('searchForm');
-        const searchInput = document.getElementById('searchInput');
-        const resultsContainer = document.getElementById('results');
-        searchForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const query = searchInput.value;
-            const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${query}&limit=9`;
+const claveApi = '4mvig64p9otiILGzfh3HSqwNnjqi27ZT';
+const formularioBusqueda = document.getElementById('searchForm');
+const entradaBusqueda = document.getElementById('searchInput');
+const contenedorResultados = document.getElementById('results');
 
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                const gifs = data.data;
+formularioBusqueda.addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+    const consulta = entradaBusqueda.value;
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=${claveApi}&q=${consulta}&limit=9`;
 
-                resultsContainer.innerHTML = '';
+    try {
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+        const gifs = datos.data;
 
-                gifs.forEach(gif => {
-                    const img = document.createElement('img');
-                    img.src = gif.images.original.url;
-                    img.alt = 'Gif result';
-                    resultsContainer.appendChild(img);
-                });
-            } catch (error) {
-                console.error('Error fetching GIFs:', error);
-            }
+        contenedorResultados.innerHTML = '';
+
+        gifs.forEach(gif => {
+            const imagen = document.createElement('img');
+            imagen.src = gif.images.original.url;
+            imagen.alt = 'Resultado de Gif';
+            contenedorResultados.appendChild(imagen);
         });
+    } catch (error) {
+        console.error('Error al obtener los GIFs:', error);
+    }
+});
