@@ -28,4 +28,12 @@ formularioBusqueda.addEventListener('submit', async (evento) => {
     // Limpiar el campo de entrada y enfocar nuevamente
     entradaBusqueda.value = '';
     entradaBusqueda.focus();
+
+    // Mostrar un mensaje si no se encontraron resultados
+    if (gifs.length === 0) {
+        const mensaje = document.createElement('p');
+        mensaje.textContent = 'No se encontraron resultados.';
+        contenedorResultados.appendChild(mensaje);
+    }
+    
 });
