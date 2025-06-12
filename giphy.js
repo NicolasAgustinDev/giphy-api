@@ -24,4 +24,8 @@ formularioBusqueda.addEventListener('submit', async (evento) => {
     } catch (error) {
         console.error('Error al obtener los GIFs:', error);
     }
+
+    // Limpiar el campo de entrada y enfocar nuevamente
+    entradaBusqueda.value = '';
+    entradaBusqueda.focus();
 });
