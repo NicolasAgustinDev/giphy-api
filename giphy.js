@@ -13,14 +13,7 @@ formularioBusqueda.addEventListener('submit', async (evento) => {
         const datos = await respuesta.json();
         const gifs = datos.data;
 
-        contenedorResultados.innerHTML = '';
-
-        gifs.forEach(gif => {
-            const imagen = document.createElement('img');
-            imagen.src = gif.images.original.url;
-            imagen.alt = 'Resultado de Gif';
-            contenedorResultados.appendChild(imagen);
-        });
+        mostrarGifs(gifs);
     } catch (error) {
         console.error('Error al obtener los GIFs:', error);
     }
@@ -28,12 +21,27 @@ formularioBusqueda.addEventListener('submit', async (evento) => {
     // Limpiar el campo de entrada y enfocar nuevamente
     entradaBusqueda.value = '';
     entradaBusqueda.focus();
-
-    // Mostrar un mensaje si no se encontraron resultados
-    if (gifs.length === 0) {
-        const mensaje = document.createElement('p');
-        mensaje.textContent = 'No se encontraron resultados.';
-        contenedorResultados.appendChild(mensaje);
-    }
-    
 });
+
+function mostrarGifs(gifs) {
+    const results = document.getElementById('results');
+    results.innerHTML = '';
+    gifs.forEach(gif => {
+        const container = document.createElement('div');
+        container.className = 'gif-container';
+
+        const img = document.createElement('img');
+        img.src = gif.images.fixed_height.url;
+        img.alt = gif.title;
+
+        const btn = document.createElement('a');
+        btn.href = gif.images.original.url;
+        btn.download = 'giphy.gif';
+        btn.textContent = 'Descargar';
+        btn.className = 'download-btn';
+
+        container.appendChild(img);
+        container.appendChild(btn);
+        results.appendChild(container);
+    });
+}
